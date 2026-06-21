@@ -11,7 +11,7 @@ class TestString {
 private:
         inline static std::vector<std::string> load_all_words() {
             std::vector<std::string> words{};
-            std::ifstream read("./words.txt");
+            std::ifstream read("../resources/words.txt");
 	    if (!read.is_open()) {
                 std::cerr << "CANNOT OPEN WORD FILE\nRUN THE PROGRAM FROM INSIDE THE DIRECTORY THAT CONTAINS IT\n";
 		std::abort();
