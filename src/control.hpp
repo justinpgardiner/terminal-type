@@ -2,9 +2,6 @@
 #include <vector>
 #include <chrono>
 #include <cmath>
-#include <unistd.h>
-#include <termios.h>
-#include <fcntl.h>
 #include <thread>
 #include "test_string.hpp"
 
@@ -41,24 +38,4 @@ private:
 	std::vector<std::string> modes_;
 	const std::vector<int> num_opts_words_;
 	const std::vector<int> num_opts_time_;
-
-        class TestTerminalSettings {
-        private:
-	    struct termios old_settings;
-	    int stdin_fd;
-	public: 
-            TestTerminalSettings() : stdin_fd(STDIN_FILENO) {
-                struct termios new_settings;
-		tcgetattr(stdin_fd, &old_settings);
-                new_settings = old_settings;
-                new_settings.c_lflag &= ~(ICANON | ECHO);
-                new_settings.c_cc[VMIN] = 0;
-                new_settings.c_cc[VTIME] = 0;
-                tcsetattr(stdin_fd, TCSANOW, &new_settings);
-	    }
-	     ~TestTerminalSettings() {
-                tcflush(stdin_fd, TCIFLUSH);
-                tcsetattr(stdin_fd, TCSANOW, &old_settings);
-	     }
-	};
 };

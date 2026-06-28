@@ -1,5 +1,6 @@
 #include <iostream>
 #include "control.hpp"
+#include "terminal_settings.hpp"
 
 Control::Control() :
 	state_{State::Welcome},
@@ -124,7 +125,7 @@ bool Control::pre_test(char c) {
     }
     const std::vector<int>& opts_ = mode_choice_ ? num_opts_words_: num_opts_time_;
     int num = opts_[num_choice_];
-    std::cout << modes_[mode_choice_] << ": " << num << "\n(press [ENTER] to exit early)\n";
+    std::cout << modes_[mode_choice_] << ": " << num << "\n(press [ENTER] to exit early)";
     if (new_test_) {
 	int word_count = mode_choice_ ? num : (int)(((num/60.0) * 300.0));
         test_.new_test(word_count);
@@ -138,7 +139,7 @@ bool Control::pre_test(char c) {
 
 bool Control::test(char c) { 
     CLEAR
-    Control::TestTerminalSettings tts;
+    TestTerminalSettings tts;
     const std::vector<int>& opts_ = mode_choice_ ? num_opts_words_: num_opts_time_;
     countdown_= opts_[num_choice_];
     start_time_ = std::chrono::steady_clock::now();
